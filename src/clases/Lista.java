@@ -1,10 +1,9 @@
 package clases;
 
-import java.util.Iterator;
 
 import tads.TadLlista;
 
-public class Lista implements TadLlista<Object>, Iterable<Nodo> {
+public class Lista implements TadLlista<Object>{
 
 	private Nodo nodoInicial; // Nodo inicial que no se puede perder (posicion 0 de la lista)
 	private Nodo nodoActual; // Nodo que usaremos para viajar por la lista
@@ -84,10 +83,5 @@ public class Lista implements TadLlista<Object>, Iterable<Nodo> {
 		}
 	}
 
-	@Override
-	public Iterator<Nodo> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
