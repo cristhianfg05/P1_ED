@@ -2,12 +2,13 @@ package clases;
 
 import tads.TadCiutada;
 
-public class Ciutada implements TadCiutada{
+public class Ciutada implements TadCiutada, Comparable{
+
 
 	@Override
-	public boolean compareTo(Ciutada data) {
+	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
-		return false;
+		return 0;
 	}
 
 	

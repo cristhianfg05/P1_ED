@@ -22,6 +22,16 @@ public class Nodo implements TadNodo{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public void setSeg(Object nodo) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setAnt(Object nodo) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
