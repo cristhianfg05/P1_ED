@@ -7,6 +7,12 @@ public class Nodo implements TadNodo{
 	private Nodo seg;
 	private Nodo ant;
 	
+	
+	
+	public Nodo(Ciutada c) {
+		super();
+		this.c = c;
+	}
 	@Override
 	public Nodo getSeg() {
 		return this.seg;

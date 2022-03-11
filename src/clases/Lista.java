@@ -7,7 +7,6 @@ public class Lista implements TadLlista<Object>{
 
 	private Nodo nodoInicial;	// Nodo inicial que no se puede perder (posicion 0 de la lista)
 	private Nodo nodoFinal;		//Nodo final que tenemos que actualizar con cada inserción normal (posicion nElem de la lsita)
-	private Nodo nodoActual;	// Nodo que usaremos para viajar por la lista
 	private int longitudLista;
 
 	public Lista() {
@@ -20,7 +19,6 @@ public class Lista implements TadLlista<Object>{
 		if (this.longitudLista == 0) { // Caso lista vacia añadimos a la primera posicion
 			this.nodoInicial = nuevoNodo;
 			this.nodoFinal = nuevoNodo;
-			this.nodoActual = nuevoNodo;
 			this.longitudLista++;
 		} else { // Caso lista con Nodos añadimos el nodo en el final
 			this.nodoFinal.setSeg(nuevoNodo);
@@ -49,15 +47,17 @@ public class Lista implements TadLlista<Object>{
 			this.nodoFinal = this.nodoFinal.getSeg();
 			this.longitudLista++;
 		}else {	//Caso 4 posicion intermedia
-			this.nodoActual = this.nodoInicial;
+			Nodo nodoActual = this.nodoInicial;
 			for (int i = 0; i < pos; i++) {
-				this.nodoActual = this.nodoActual.getSeg();
+				nodoActual = nodoActual.getSeg();
+				System.out.print(i+"-");
 			}
-			this.nodoActual.getSeg().setAnt(nuevoNodo);
-			Nodo nodoAux = this.nodoActual.getSeg();
-			this.nodoActual.setSeg(nuevoNodo);
-			this.nodoActual.getSeg().setAnt(this.nodoActual);
-			this.nodoActual.getSeg().setSeg(nodoAux);
+			System.out.print("\n");
+			nodoActual.getSeg().setAnt(nuevoNodo);
+			Nodo nodoAux = nodoActual.getSeg();
+			nodoActual.setSeg(nuevoNodo);
+			nodoActual.getSeg().setAnt(nodoActual);
+			nodoActual.getSeg().setSeg(nodoAux);
 		}
 		return true;
 	}
@@ -66,13 +66,13 @@ public class Lista implements TadLlista<Object>{
 	public Object Obtenir(int pos) { // Pos {0,1,2,...,nElem}
 		if (pos < this.longitudLista) {
 			int i = 0;
-			this.nodoActual = this.nodoInicial;
+			Nodo nodoActual = this.nodoInicial;
 			while (i < pos) {
-				this.nodoActual = this.nodoActual.getSeg();
+				nodoActual = nodoActual.getSeg();
 				i++;
 			}
 
-			return this.nodoActual;
+			return nodoActual;
 		}else
 			return false;
 	}
@@ -93,12 +93,12 @@ public class Lista implements TadLlista<Object>{
 			this.nodoInicial = this.nodoInicial.getSeg();
 			this.longitudLista--;
 		}else {	//Posición intermedia (caso basico)
-			this.nodoActual = this.nodoInicial;
+			Nodo nodoActual = this.nodoInicial;
 			for (int i = 0; i < pos; i++)	//Avanzo hasta pos-1 para ponerme en el primer nodo a modificar
-				this.nodoActual = this.nodoActual.getSeg();
+				nodoActual = nodoActual.getSeg();
 			
-			this.nodoActual.setSeg(this.nodoActual.getSeg().getSeg());
-			this.nodoActual.getSeg().setAnt(nodoActual);
+			nodoActual.setSeg(nodoActual.getSeg().getSeg());
+			nodoActual.getSeg().setAnt(nodoActual);
 			this.longitudLista--;
 		}
 		return true;
@@ -110,12 +110,12 @@ public class Lista implements TadLlista<Object>{
 			return 0;
 		}else {
 			Nodo dataNodo = (Nodo) data;
-			this.nodoActual = this.nodoInicial;
+			Nodo nodoActual = this.nodoInicial;
 			int i = 0;
 			boolean trobat = false;
 			while(i<this.longitudLista && !trobat) {
-				this.nodoActual = this.nodoActual.getSeg();
-				if(dataNodo.equals(this.nodoActual)) {
+				nodoActual = nodoActual.getSeg();
+				if(dataNodo.equals(nodoActual)) {
 					trobat = true;
 				}
 			}
@@ -124,6 +124,19 @@ public class Lista implements TadLlista<Object>{
 			return i;	 
 		}
 	}
+
+	@Override
+	public String toString() {
+		String concat = "";
+		Nodo nodoActual = this.nodoInicial;
+		for(int i = 0; i<longitudLista; i++) {
+			concat = concat + nodoActual.getValor().getDni()+"\n";
+			nodoActual = nodoActual.getSeg();
+		}
+		return concat;
+	}
+	
+	
 
 
 }
