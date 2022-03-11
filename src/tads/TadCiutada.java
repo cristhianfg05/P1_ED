@@ -1,8 +1,15 @@
  package tads;
 
-import clases.Ciutada;
-
 public interface TadCiutada{
 	
-	//Compara un ciutada con el que llama
+	int compareTo(Object ob);
+	
+	String getNom();
+	void setNom(String nom);
+	
+	String getCognom();
+	void setCognom(String cognom);
+	
+	String getDni();
+	void setDni(String dni);
 }

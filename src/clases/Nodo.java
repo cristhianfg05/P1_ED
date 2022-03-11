@@ -9,27 +9,26 @@ public class Nodo implements TadNodo{
 	
 	@Override
 	public Nodo getSeg() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.seg;
 	}
 	@Override
 	public Nodo getAnt() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ant;
 	}
 	@Override
 	public Ciutada getValor() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.c;
 	}
 	@Override
 	public void setSeg(Object nodo) {
-		// TODO Auto-generated method stub
+		Nodo n = (Nodo) nodo;
+		this.seg = n;
 		
 	}
 	@Override
 	public void setAnt(Object nodo) {
-		// TODO Auto-generated method stub
+		Nodo n = (Nodo) nodo;
+		this.ant = n;
 		
 	}
 	
