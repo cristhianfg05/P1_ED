@@ -48,7 +48,7 @@ public class Lista implements TadLlista<Object>{
 			this.longitudLista++;
 		}else {	//Caso 4 posicion intermedia
 			Nodo nodoActual = this.nodoInicial;
-			for (int i = 0; i < pos; i++) {
+			for (int i = 0; i < pos-1; i++) {
 				nodoActual = nodoActual.getSeg();
 				System.out.print(i+"-");
 			}
@@ -58,13 +58,19 @@ public class Lista implements TadLlista<Object>{
 			nodoActual.setSeg(nuevoNodo);
 			nodoActual.getSeg().setAnt(nodoActual);
 			nodoActual.getSeg().setSeg(nodoAux);
+			this.longitudLista++;
 		}
 		return true;
 	}
 
 	@Override
-	public Object Obtenir(int pos) { // Pos {0,1,2,...,nElem}
-		if (pos < this.longitudLista) {
+	public Object Obtenir(int pos) { // Pos {0,1,2,...,nElem-1}
+		if (pos < this.longitudLista && pos >= 0) {
+			if(pos == 0)
+				return nodoInicial;
+			else if(pos == longitudLista-1)
+				return nodoFinal;
+			
 			int i = 0;
 			Nodo nodoActual = this.nodoInicial;
 			while (i < pos) {
@@ -94,7 +100,7 @@ public class Lista implements TadLlista<Object>{
 			this.longitudLista--;
 		}else {	//Posición intermedia (caso basico)
 			Nodo nodoActual = this.nodoInicial;
-			for (int i = 0; i < pos; i++)	//Avanzo hasta pos-1 para ponerme en el primer nodo a modificar
+			for (int i = 0; i < pos-1; i++)	//Avanzo hasta pos-1 para ponerme en el primer nodo a modificar
 				nodoActual = nodoActual.getSeg();
 			
 			nodoActual.setSeg(nodoActual.getSeg().getSeg());
@@ -115,11 +121,12 @@ public class Lista implements TadLlista<Object>{
 			boolean trobat = false;
 			while(i<this.longitudLista && !trobat) {
 				nodoActual = nodoActual.getSeg();
-				if(dataNodo.equals(nodoActual)) {
+				if(dataNodo.getValor().compareTo(nodoActual.getValor()) == 0) {
 					trobat = true;
 				}
+				i++;
 			}
-			System.out.print("Elemento encontrado? "+trobat);
+			System.out.print("Elemento encontrado? "+trobat+"\n");
 			//Devuelve el costo / elementos recorridos lo haya encontrado o no
 			return i;	 
 		}
@@ -130,7 +137,7 @@ public class Lista implements TadLlista<Object>{
 		String concat = "";
 		Nodo nodoActual = this.nodoInicial;
 		for(int i = 0; i<longitudLista; i++) {
-			concat = concat + nodoActual.getValor().getDni()+"\n";
+			concat = concat +nodoActual.getValor().getNom()+ " "+ nodoActual.getValor().getCognom()+" DNI: "+nodoActual.getValor().getDni()+"\n";
 			nodoActual = nodoActual.getSeg();
 		}
 		return concat;

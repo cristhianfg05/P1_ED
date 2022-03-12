@@ -37,6 +37,12 @@ public class Nodo implements TadNodo{
 		this.ant = n;
 		
 	}
+	@Override
+	public String toString() {
+		return "Ciutada "+c.getDni();
+	}
+	
+	
 	
 	
 }
