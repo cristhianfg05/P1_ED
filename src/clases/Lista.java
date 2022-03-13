@@ -41,7 +41,7 @@ public class Lista implements TadLlista<Object>{
 			this.nodoInicial.getAnt().setSeg(this.nodoInicial);
 			this.nodoInicial = nuevoNodo;	
 			this.longitudLista++;
-		}else if(pos == this.longitudLista -1) { //Caso 3 posicion final
+		}else if(pos == this.longitudLista -1 && this.longitudLista > 2) { //Caso 3 posicion final si la lista tiene mas de 2 elementos 
 			this.nodoFinal.setSeg(nuevoNodo);
 			this.nodoFinal.getSeg().setAnt(this.nodoFinal);
 			this.nodoFinal = this.nodoFinal.getSeg();
@@ -50,9 +50,7 @@ public class Lista implements TadLlista<Object>{
 			Nodo nodoActual = this.nodoInicial;
 			for (int i = 0; i < pos-1; i++) {
 				nodoActual = nodoActual.getSeg();
-				System.out.print(i+"-");
 			}
-			System.out.print("\n");
 			nodoActual.getSeg().setAnt(nuevoNodo);
 			Nodo nodoAux = nodoActual.getSeg();
 			nodoActual.setSeg(nuevoNodo);
@@ -66,12 +64,12 @@ public class Lista implements TadLlista<Object>{
 	@Override
 	public Object Obtenir(int pos) { // Pos {0,1,2,...,nElem-1}
 		if (pos < this.longitudLista && pos >= 0) {
-			if(pos == 0)
+			if(pos == 0)	//Caso 1 posicion 1
 				return nodoInicial;
-			else if(pos == longitudLista-1)
+			else if(pos == longitudLista-1)	//Caso 2 posicion final
 				return nodoFinal;
 			
-			int i = 0;
+			int i = 0;	//Caso 3 posicion intermedia
 			Nodo nodoActual = this.nodoInicial;
 			while (i < pos) {
 				nodoActual = nodoActual.getSeg();
@@ -128,7 +126,7 @@ public class Lista implements TadLlista<Object>{
 			}
 			System.out.print("Elemento encontrado? "+trobat+"\n");
 			//Devuelve el costo / elementos recorridos lo haya encontrado o no
-			return i;	 
+			return i+1;	 
 		}
 	}
 

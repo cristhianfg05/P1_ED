@@ -39,7 +39,7 @@ public class Nodo implements TadNodo{
 	}
 	@Override
 	public String toString() {
-		return "Ciutada "+c.getDni();
+		return "Ciutada "+c.getNom()+" "+c.getCognom()+" "+c.getDni();
 	}
 	
 	
