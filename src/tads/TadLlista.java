@@ -18,8 +18,11 @@ public interface TadLlista <T>{
 	boolean Esborrar(int pos);
 	
 	//Comprueba si esta en la lista (si esta devuelve el numero
-	//de elementos buscados, sino devuelve lo mismo en una exception
+	//de elementos buscados, sino devuelve el numero de elementos recorridos
 	int Buscar(T data);
 	
-	
+	String toString();
+	String toStringIterator();
 }
+
+

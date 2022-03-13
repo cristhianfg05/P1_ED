@@ -1,8 +1,10 @@
 package clases;
 
+import java.util.Iterator;
+
 import tads.TadNodo;
 
-public class Nodo implements TadNodo{ 
+public class Nodo implements TadNodo, Iterator<Nodo>{ 
 	private Ciutada c;
 	private Nodo seg;
 	private Nodo ant;
@@ -41,7 +43,15 @@ public class Nodo implements TadNodo{
 	public String toString() {
 		return "Ciutada "+c.getNom()+" "+c.getCognom()+" "+c.getDni();
 	}
-	
+	@Override
+	public boolean hasNext() {
+		return this.getSeg() != null;
+	}
+	@Override
+	public Nodo next() {
+		return this.getSeg();
+	}
+
 	
 	
 	

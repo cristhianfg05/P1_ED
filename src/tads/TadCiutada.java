@@ -2,8 +2,6 @@
 
 public interface TadCiutada{
 	
-	int compareTo(Object ob);
-	
 	String getNom();
 	void setNom(String nom);
 	
@@ -13,3 +11,7 @@ public interface TadCiutada{
 	String getDni();
 	void setDni(String dni);
 }
+
+
+
+

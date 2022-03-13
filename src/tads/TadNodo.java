@@ -8,5 +8,6 @@ public interface TadNodo<T>{
 	T getValor();
 	void setSeg(T nodo);
 	void setAnt(T nodo);
-	
+	String toString();
 }
+
