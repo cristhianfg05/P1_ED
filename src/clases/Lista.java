@@ -117,7 +117,7 @@ public class Lista implements TadLlista<Object>{
 			Nodo nodoActual = this.nodoInicial;
 			int i = 0;
 			boolean trobat = false;
-			while(i<this.longitudLista && !trobat) {
+			while(i<this.longitudLista-1 && !trobat) {
 				nodoActual = nodoActual.getSeg();
 				if(dataNodo.getValor().compareTo(nodoActual.getValor()) == 0) {
 					trobat = true;
