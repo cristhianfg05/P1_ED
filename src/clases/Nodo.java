@@ -40,10 +40,6 @@ public class Nodo implements TadNodo, Iterator<Nodo>{
 		
 	}
 	@Override
-	public String toString() {
-		return "Ciutada "+c.getNom()+" "+c.getCognom()+" "+c.getDni();
-	}
-	@Override
 	public boolean hasNext() {
 		return this.getSeg() != null;
 	}
@@ -51,6 +47,11 @@ public class Nodo implements TadNodo, Iterator<Nodo>{
 	public Nodo next() {
 		return this.getSeg();
 	}
+	@Override
+	public String toString() {
+		return "Ciutada "+c.getNom()+" "+c.getCognom()+" "+c.getDni();
+	}
+
 
 	
 	

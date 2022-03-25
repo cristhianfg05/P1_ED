@@ -18,10 +18,9 @@ import clases.Nodo;
 class PruebasUnitarias {
 
 	
-	//assertEquals(resultadoEsperado, resultado);
 	@Test
 	@Order(1)
-	void testInserir() throws FileNotFoundException {	//Caso lista vacia + Caso lista con elementos
+	void testInserir() throws FileNotFoundException {	//Caso lista vacia
 		Lista listaPruebas = afegirDadesDeFitxer(10);
 		System.out.print(listaPruebas+"\n");
 		System.out.print(listaPruebas.toStringIterator()+"\n");
@@ -33,9 +32,9 @@ class PruebasUnitarias {
 		Lista listaPruebas = afegirDadesDeFitxer(4);
 		listaPruebas.InserirPos(new Nodo(new Ciutada("Cristhian", "Fajado", "49978348S")), 0);	//Inserir en la primera posición
 		System.out.print(listaPruebas+"\n");
-		listaPruebas.InserirPos(new Nodo(new Ciutada("Cristhian", "Fajado", "49978348S")), 5);
+		listaPruebas.InserirPos(new Nodo(new Ciutada("Cristhian", "Fajado", "49978348S")), 5);	//Insertar en la ultima posicion
 		System.out.print(listaPruebas+"\n");
-		listaPruebas.InserirPos(new Nodo(new Ciutada("Cristhian", "Fajado", "49978348S")), 3);
+		listaPruebas.InserirPos(new Nodo(new Ciutada("Cristhian", "Fajado", "49978348S")), 3);	//Insertar en el medio
 		System.out.print(listaPruebas+"\n");
 	}
 	
