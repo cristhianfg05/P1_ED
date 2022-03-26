@@ -1,5 +1,7 @@
 package tads;
 
+import java.util.ArrayList;
+
 public interface TadListaHash <T,K>{
 	
 	void Inserir(K key, T value, T value2);
@@ -14,7 +16,7 @@ public interface TadListaHash <T,K>{
 	
 	T[]ObtenirValors();
 	
-	K[]ObtenirKeys();
+	ArrayList<String> ObtenirKeys();
 	
 	float ObtenirFactorCarrega();
 	
