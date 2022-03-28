@@ -7,5 +7,6 @@ public interface TadNodoHash<T> {
 	T getValor();
 	void setSeg(T nod);
 	String toString();
+	void setValor(T ciutada);
 	
 }

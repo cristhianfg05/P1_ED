@@ -28,4 +28,10 @@ public class NodoHash implements TadNodoHash<Object>{
 		this.seg = nod;
 	}
 
+	@Override
+	public void setValor(Object ciutada) {
+		this.c = (Ciutada)ciutada;
+		
+	}
+
 }

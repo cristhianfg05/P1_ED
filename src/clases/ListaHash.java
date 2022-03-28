@@ -31,13 +31,20 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 		if (this.lista[pos] == null) {
 			this.lista[pos] = new NodoHash(new Ciutada((String) key, (String) value, (String) value2));
+			this.elems++;
 		} else {
+			boolean trobat = false;
 			NodoHash actual = this.lista[pos];
-			// Añadir if existe (metodo a crear) si existe modifico sino me jodo y lo añado
-			while (actual.getSeg() != null) {
+			while (actual.getSeg() != null && !trobat) {
 				actual = actual.getSeg();
+				if (actual.getValor().getDni().equals((String) key)) {
+					trobat = true;
+				}
 			}
-			actual.setSeg(new NodoHash(new Ciutada((String) key, (String) value, (String) value2)));
+			if (trobat)
+				actual.setValor(new Ciutada((String) key, (String) value, (String) value2));
+			else
+				actual.setSeg(new NodoHash(new Ciutada((String) key, (String) value, (String) value2)));
 		}
 	}
 
@@ -97,11 +104,11 @@ public class ListaHash implements TadListaHash<Object, Object> {
 		}
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object[] ObtenirValors() {
-		
+
 		if (this.elems == 0)
 			return null;
 		else {
@@ -109,53 +116,78 @@ public class ListaHash implements TadListaHash<Object, Object> {
 			ArrayList<String> apellidos = new ArrayList<String>();
 			NodoHash actual = this.lista[0];
 			for (int i = 0; i < elems; i++) {
-				while (actual.getSeg() != null) {
+				if (actual.getSeg() == null) {
 					nombres.add(actual.getValor().getNom());
 					apellidos.add(actual.getValor().getCognom());
-					actual = actual.getSeg();
+					actual = this.lista[i];
+				} else {
+					while (actual.getSeg() != null) {
+						nombres.add(actual.getValor().getNom());
+						apellidos.add(actual.getValor().getCognom());
+						actual = actual.getSeg();
+					}
+					nombres.add(actual.getValor().getNom());
+					apellidos.add(actual.getValor().getCognom());
+					actual = this.lista[i];
 				}
-				nombres.add(actual.getValor().getNom());
-				apellidos.add(actual.getValor().getCognom());
-				actual = this.lista[i];
 			}
-			
-			ArrayList<String> []lista = new ArrayList[2];
+
+			ArrayList<String>[] lista = new ArrayList[2];
 			lista[0] = nombres;
 			lista[1] = apellidos;
 			return lista;
 		}
-		
+
 	}
 
 	@Override
 	public ArrayList<String> ObtenirKeys() {
-		
+
 		if (this.elems == 0)
 			return null;
 		else {
 			ArrayList<String> keys = new ArrayList<String>();
 			NodoHash actual = this.lista[0];
+
 			for (int i = 0; i < elems; i++) {
-				while (actual.getSeg() != null) {
+				if (actual.getSeg() == null) {
 					keys.add(actual.getValor().getDni());
-					actual = actual.getSeg();
+					actual = this.lista[i];
+				} else {
+					while (actual.getSeg() != null) {
+						keys.add(actual.getValor().getDni());
+						actual = actual.getSeg();
+					}
+
+					keys.add(actual.getValor().getDni());
+					actual = this.lista[i];
 				}
-				keys.add(actual.getValor().getDni());
-				actual = this.lista[i];
 			}
-			
+
 			return keys;
 		}
-		
+
 	}
 
 	@Override
 	public float ObtenirFactorCarrega() {
-		return this.elems/this.lista.length;
+		return this.elems / this.lista.length;
 	}
 
 	private void Redimensionar() {
-		
+		NodoHash[] listaNueva = new NodoHash[this.lista.length + 10];
+
+		NodoHash actual = this.lista[0];
+		for (int i = 0; i < elems; i++) {
+			listaNueva[i] = actual;
+			if(actual.getSeg() == null) {
+				
+			}else {
+				while(actual.getSeg() != null) {
+					
+				}
+			}
+		}
 	}
 
 	private int Xor(String palabra) {
