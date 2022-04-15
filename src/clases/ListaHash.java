@@ -32,7 +32,6 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 		// Calculamos posicion
 		int pos = Xor((String) key) % this.lista.length;
-		System.out.println(pos);
 
 		if (this.lista[pos] == null) {
 			this.lista[pos] = new NodoHash(new Ciutada((String) value, (String) value2, (String) key));
@@ -324,6 +323,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 		for (int i = 0; i < bin.length(); i++) {
 			n = n + Integer.valueOf(bin);
 		}
+		
+		if(n < 0)
+			n = n*-1;
 		return n;
 	}
 

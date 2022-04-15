@@ -102,13 +102,7 @@ public class main {
 			}
 		}
 		
-		ListaHash p = new ListaHash(15);
-		p.Inserir("49978348S", "AA", "BB");
-		p.Inserir("3333", "AA", "BB");
-		p.Inserir("2222", "AA Nuevo", "BB");
-		p.Inserir("1111", "AA Nuevo", "BB");
-		System.out.println(p);
-		p.Esborrar("3333");
+		ListaHash p = afegirDadesDeFitxer2(16);
 		System.out.println(p);
 		
 		
@@ -138,6 +132,18 @@ public class main {
 		for (int i = 0; i < fichero.length; i++) {
 			String[] ficheroSplit = fichero[i].split(",");
 			lista.Inserir(new Nodo(new Ciutada(ficheroSplit[0], ficheroSplit[1], ficheroSplit[2] + ficheroSplit[3])));
+		}
+		return lista;
+	}
+	
+	private static ListaHash afegirDadesDeFitxer2(int linies) throws FileNotFoundException {
+		ListaHash lista = new ListaHash(linies + 10);
+		String[] fichero = llegirLiniesFitxer(linies);
+		int i = 0;
+		for (i = 0; i < fichero.length; i++) {
+			String[] ficheroSplit = fichero[i].split(",");
+			lista.Inserir(ficheroSplit[0], ficheroSplit[1], ficheroSplit[2]);
+			System.out.println("\n"+i);
 		}
 		return lista;
 	}
