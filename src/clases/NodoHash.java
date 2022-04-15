@@ -31,7 +31,13 @@ public class NodoHash implements TadNodoHash<Object>{
 	@Override
 	public void setValor(Object ciutada) {
 		this.c = (Ciutada)ciutada;
-		
 	}
+
+	@Override
+	public String toString() {
+		return "Ciutada "+c.getNom()+" "+c.getCognom()+" "+c.getDni();
+	}
+	
+	
 
 }

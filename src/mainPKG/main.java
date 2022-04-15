@@ -2,6 +2,7 @@ package mainPKG;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import clases.*;
@@ -100,6 +101,18 @@ public class main {
 				break;
 			}
 		}
+		
+		ListaHash p = new ListaHash(15);
+		p.Inserir("49978348S", "AA", "BB");
+		p.Inserir("3333", "AA", "BB");
+		p.Inserir("2222", "AA Nuevo", "BB");
+		p.Inserir("1111", "AA Nuevo", "BB");
+		System.out.println(p);
+		p.Esborrar("3333");
+		System.out.println(p);
+		
+		
+		
 	}
 
 	private static String[] llegirLiniesFitxer(int nLinies) throws FileNotFoundException {
