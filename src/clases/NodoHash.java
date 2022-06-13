@@ -41,3 +41,7 @@ public class NodoHash implements TadNodoHash<Object>{
 	
 
 }
+
+
+
+

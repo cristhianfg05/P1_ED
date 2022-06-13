@@ -2,7 +2,6 @@ package mainPKG;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import clases.*;
@@ -14,7 +13,7 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Cuantos ciudadanos del fichero quieres añadir? [0-100] ");
 		
-		Lista listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
+		ListaEnlazadaOrdenada listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
 
 
 		char opcion = 'a';
@@ -102,11 +101,20 @@ public class main {
 			}
 		}
 		
-		ListaHash p = afegirDadesDeFitxer2(16);
-		System.out.println(p);
+		/*Test de pruebas HASH MUCHOS ELEMENTOS*/
+		ListaHash p = afegirDadesDeFitxer2(15); 	//Añade muchos elementos a la lista todos recogidos del CSV Generado en Mookaroo
+		System.out.println(p);						//Imprimimos la lista completa
+		System.out.println(p.ObtenirKeys());		//Recogemos todos los DNI
+		System.out.println(p.ObtenirValors()[0]);	//Recogemos todos los nombres
+		System.out.print(p.ObtenirValors()[1]);		//Recogemos todos los apellidos
+		System.out.println(p.Buscar("57295964M"));	//Buscamos el primer elemento añadido (Obtenir y buscar tienen el mismo funcionamiento por lo que testeando uno sabemos que ambos funcionan)
+		System.out.println(p.Buscar("94051688L"));	//Buscamos el ultimo elemento añadido
 		
+		p.Esborrar("57295964M");					//Borramos el primer elemento y uno del medio y mostramos por pantalla
+		p.Esborrar("41242356T");
+		System.out.println(p);						//Mostramos y ambos elementos han desaparecido
 		
-		
+		sc.close();
 	}
 
 	private static String[] llegirLiniesFitxer(int nLinies) throws FileNotFoundException {
@@ -116,7 +124,6 @@ public class main {
 		if (nLinies > 100)
 			nLinies = 100;
 		
-		System.out.print(nLinies);
 		result = new String[nLinies];
 		Scanner f = new Scanner(new File("CiutadansED.csv"));
 		for (int i = 0; i < nLinies; i++) {
@@ -126,8 +133,8 @@ public class main {
 		return result;
 	}
 
-	private static Lista afegirDadesDeFitxer(int linies) throws FileNotFoundException {
-		Lista lista = new Lista();
+	private static ListaEnlazadaOrdenada afegirDadesDeFitxer(int linies) throws FileNotFoundException {
+		ListaEnlazadaOrdenada lista = new ListaEnlazadaOrdenada();
 		String[] fichero = llegirLiniesFitxer(linies);
 		for (int i = 0; i < fichero.length; i++) {
 			String[] ficheroSplit = fichero[i].split(",");
@@ -137,13 +144,12 @@ public class main {
 	}
 	
 	private static ListaHash afegirDadesDeFitxer2(int linies) throws FileNotFoundException {
-		ListaHash lista = new ListaHash(linies + 10);
+		ListaHash lista = new ListaHash(3);
 		String[] fichero = llegirLiniesFitxer(linies);
 		int i = 0;
 		for (i = 0; i < fichero.length; i++) {
 			String[] ficheroSplit = fichero[i].split(",");
-			lista.Inserir(ficheroSplit[0], ficheroSplit[1], ficheroSplit[2]);
-			System.out.println("\n"+i);
+			lista.Inserir(ficheroSplit[2]+ficheroSplit[3], ficheroSplit[1], ficheroSplit[0]);
 		}
 		return lista;
 	}

@@ -7,8 +7,6 @@ import tads.TadListaHash;
 
 public class ListaHash implements TadListaHash<Object, Object> {
 
-	// En toda la practica utilizaré 5 como valor m para hacer el calculo de la
-	// posicion
 	private NodoHash lista[];
 	private int elems;
 
@@ -31,7 +29,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 		}
 
 		// Calculamos posicion
-		int pos = Xor((String) key) % this.lista.length;
+		int pos = key.hashCode() % this.lista.length;
+		if (pos < 0)
+			pos = pos * -1;
 
 		if (this.lista[pos] == null) {
 			this.lista[pos] = new NodoHash(new Ciutada((String) value, (String) value2, (String) key));
@@ -64,7 +64,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 	@Override
 	public Object Obtenir(Object key) {
-		int pos = Xor((String) key) % lista.length;
+		int pos = key.hashCode() % this.lista.length;
+		if (pos < 0)
+			pos = pos * -1;
 
 		if (this.lista[pos] == null)
 			return false;
@@ -97,7 +99,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 	@Override
 	public int Buscar(Object key) {
 		int cost = 1;
-		int pos = Xor((String) key) % lista.length;
+		int pos = key.hashCode() % this.lista.length;
+		if (pos < 0)
+			pos = pos * -1;
 		if (this.lista[pos] == null) {
 			System.out.println("\nElemento no encontrado posicion nula");
 			return 1;
@@ -137,7 +141,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 	@Override
 	public void Esborrar(Object key) {
-		int pos = Xor((String) key) % this.lista.length;
+		int pos = key.hashCode() % this.lista.length;
+		if (pos < 0)
+			pos = pos * -1;
 		boolean trobat = false;
 
 		if (this.lista[pos] == null) {
@@ -194,7 +200,6 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object[] ObtenirValors() {
 
@@ -204,11 +209,31 @@ public class ListaHash implements TadListaHash<Object, Object> {
 			ArrayList<String> nombres = new ArrayList<String>();
 			ArrayList<String> apellidos = new ArrayList<String>();
 			NodoHash actual = this.lista[0];
-			for (int i = 0; i < elems; i++) {
+			for (int i = 1; i < lista.length; i++) {
+				if (actual != null) {
+					if (actual.getSeg() == null) {
+						nombres.add(actual.getValor().getNom());
+						apellidos.add(actual.getValor().getCognom());
+						actual = this.lista[i];
+					} else {
+						while (actual.getSeg() != null) {
+							nombres.add(actual.getValor().getNom());
+							apellidos.add(actual.getValor().getCognom());
+							actual = actual.getSeg();
+						}
+						nombres.add(actual.getValor().getNom());
+						apellidos.add(actual.getValor().getCognom());
+						actual = this.lista[i];
+					}
+
+				} else {
+					actual = this.lista[i];
+				}
+			}
+			if (actual != null) {
 				if (actual.getSeg() == null) {
 					nombres.add(actual.getValor().getNom());
 					apellidos.add(actual.getValor().getCognom());
-					actual = this.lista[i];
 				} else {
 					while (actual.getSeg() != null) {
 						nombres.add(actual.getValor().getNom());
@@ -217,8 +242,8 @@ public class ListaHash implements TadListaHash<Object, Object> {
 					}
 					nombres.add(actual.getValor().getNom());
 					apellidos.add(actual.getValor().getCognom());
-					actual = this.lista[i];
 				}
+
 			}
 
 			ArrayList<String>[] lista = new ArrayList[2];
@@ -238,10 +263,28 @@ public class ListaHash implements TadListaHash<Object, Object> {
 			ArrayList<String> keys = new ArrayList<String>();
 			NodoHash actual = this.lista[0];
 
-			for (int i = 1; i < elems; i++) {
-				if (actual.getSeg() == null && actual != null) {
-					keys.add(actual.getValor().getDni());
+			for (int i = 1; i < lista.length; i++) {
+				if (actual != null) {
+					if (actual.getSeg() == null) {
+						keys.add(actual.getValor().getDni());
+						actual = this.lista[i];
+					} else {
+						while (actual.getSeg() != null) {
+							keys.add(actual.getValor().getDni());
+							actual = actual.getSeg();
+						}
+
+						keys.add(actual.getValor().getDni());
+						actual = this.lista[i];
+					}
+
+				} else {
 					actual = this.lista[i];
+				}
+			}
+			if (actual != null) {
+				if (actual.getSeg() == null) {
+					keys.add(actual.getValor().getDni());
 				} else {
 					while (actual.getSeg() != null) {
 						keys.add(actual.getValor().getDni());
@@ -249,10 +292,9 @@ public class ListaHash implements TadListaHash<Object, Object> {
 					}
 
 					keys.add(actual.getValor().getDni());
-					actual = this.lista[i];
 				}
-			}
 
+			}
 			return keys;
 		}
 
@@ -282,6 +324,19 @@ public class ListaHash implements TadListaHash<Object, Object> {
 				} else
 					actual = this.lista[i];
 			}
+
+			if (actual != null) {
+				if (actual.getSeg() == null) {
+					concat = concat + actual + "\n";
+				} else {
+					while (actual.getSeg() != null) {
+						concat = concat + actual + "\n";
+						actual = actual.getSeg();
+					}
+
+					concat = concat + actual + "\n";
+				}
+			}
 			return concat;
 		}
 	}
@@ -293,40 +348,134 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 	private void Redimensionar() {
 		NodoHash[] listaNueva = new NodoHash[this.lista.length + 10];
-
-		for (int i = 0; i < lista.length; i++) {
-			if (this.lista[i] != null) {
-				listaNueva[i] = this.lista[i];
-				
-				if (this.lista[i].getSeg() != null) {
-					NodoHash actualNueva = listaNueva[i];
-					NodoHash actualAntigua = this.lista[i];
-					while(actualAntigua.getSeg() != null) {
-						actualNueva.setSeg(actualAntigua.getSeg());
-						actualNueva = actualNueva.getSeg();
-						actualAntigua = actualAntigua.getSeg();
+		int pos;
+		NodoHash actual = this.lista[0];
+		NodoHash aux;
+		for (int i = 1; i < this.lista.length; i++) {
+			if(actual != null) {
+				if(actual.getSeg() == null) {
+					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
+					if(pos < 0)
+						pos = pos * -1;
+					if(listaNueva[pos] == null) {
+						listaNueva[pos] = actual;
+					}else {
+						aux = listaNueva[pos];
+						if(aux.getSeg() == null) {
+							aux.setSeg(actual);
+						}else {
+							while(aux.getSeg() != null) {
+								aux = aux.getSeg();
+							}
+							aux.setSeg(actual);
+						}
 					}
+					actual = this.lista[i];
+				}else {
+					while(actual.getSeg() != null) {
+						pos = actual.getValor().getDni().hashCode() % listaNueva.length;
+						if(pos < 0)
+							pos = pos * -1;
+						if(listaNueva[pos] == null) {
+							listaNueva[pos] = actual;
+						}else {
+							aux = listaNueva[pos];
+							if(aux.getSeg() == null) {
+								aux.setSeg(actual);
+							}else {
+								while(aux.getSeg() != null) {
+									aux = aux.getSeg();
+								}
+								aux.setSeg(actual);
+							}
+						}
+						actual = actual.getSeg();
+					}
+					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
+					if(pos < 0)
+						pos = pos * -1;
+					if(listaNueva[pos] == null) {
+						listaNueva[pos] = actual;
+					}else {
+						aux = listaNueva[pos];
+						if(aux.getSeg() == null) {
+							aux.setSeg(actual);
+						}else {
+							while(aux.getSeg() != null) {
+								aux = aux.getSeg();
+							}
+							aux.setSeg(actual);
+						}
+					}
+					
+				}
+			}else 
+				actual = this.lista[i];
+			
+		}
+		if(actual != null) {
+			if(actual.getSeg() == null) {
+				pos = actual.getValor().getDni().hashCode() % listaNueva.length;
+				if(pos < 0)
+					pos = pos * -1;
+				if(listaNueva[pos] == null) {
+					listaNueva[pos] = actual;
+				}else {
+					aux = listaNueva[pos];
+					if(aux.getSeg() == null) {
+						aux.setSeg(actual);
+					}else {
+						while(aux.getSeg() != null) {
+							aux = aux.getSeg();
+						}
+						aux.setSeg(actual);
+					}
+				}
+			}else {
+				while(actual.getSeg() != null) {
+					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
+					if(pos < 0)
+						pos = pos * -1;
+					if(listaNueva[pos] == null) {
+						listaNueva[pos] = actual;
+					}else {
+						aux = listaNueva[pos];
+						if(aux.getSeg() == null) {
+							aux.setSeg(actual);
+						}else {
+							while(aux.getSeg() != null) {
+								aux = aux.getSeg();
+							}
+							aux.setSeg(actual);
+						}
+					}
+					actual = actual.getSeg();
 				}
 			}
 			
 		}
-		this.lista = listaNueva;
 	}
-
-	private int Xor(String palabra) {
-		int valor = 0;
-		for (int i = 0; i < palabra.length(); i++) {
-			valor = valor + palabra.charAt(i);
-		}
-		String bin = Integer.toBinaryString(valor);
-		int n = 0;
-		for (int i = 0; i < bin.length(); i++) {
-			n = n + Integer.valueOf(bin);
-		}
-		
-		if(n < 0)
-			n = n*-1;
-		return n;
-	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
