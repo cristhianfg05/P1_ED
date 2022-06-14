@@ -13,7 +13,7 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Cuantos ciudadanos del fichero quieres añadir? [0-100] ");
 		
-		ListaEnlazadaOrdenada listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
+		Lista listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
 
 
 		char opcion = 'a';
@@ -121,8 +121,8 @@ public class main {
 		String[] result;
 		if (nLinies < 0)
 			nLinies = 0;
-		if (nLinies > 100)
-			nLinies = 100;
+		if (nLinies > 50000)
+			nLinies = 50000;
 		
 		result = new String[nLinies];
 		Scanner f = new Scanner(new File("ED_Ciutadans_50k.csv"));
@@ -133,8 +133,8 @@ public class main {
 		return result;
 	}
 
-	private static ListaEnlazadaOrdenada afegirDadesDeFitxer(int linies) throws FileNotFoundException {
-		ListaEnlazadaOrdenada lista = new ListaEnlazadaOrdenada();
+	private static Lista afegirDadesDeFitxer(int linies) throws FileNotFoundException {
+		Lista lista = new Lista();
 		String[] fichero = llegirLiniesFitxer(linies);
 		for (int i = 0; i < fichero.length; i++) {
 			String[] ficheroSplit = fichero[i].split(",");
