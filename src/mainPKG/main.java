@@ -108,10 +108,10 @@ public class main {
 		System.out.println(p.ObtenirValors()[0]);	//Recogemos todos los nombres
 		System.out.print(p.ObtenirValors()[1]);		//Recogemos todos los apellidos
 		System.out.println(p.Buscar("57295964M"));	//Buscamos el primer elemento añadido (Obtenir y buscar tienen el mismo funcionamiento por lo que testeando uno sabemos que ambos funcionan)
-		System.out.println(p.Buscar("94051688L"));	//Buscamos el ultimo elemento añadido
+		System.out.println(p.Buscar("92897800W"));	//Buscamos el ultimo elemento añadido
 		
 		p.Esborrar("57295964M");					//Borramos el primer elemento y uno del medio y mostramos por pantalla
-		p.Esborrar("41242356T");
+		p.Esborrar("48928682G");
 		System.out.println(p);						//Mostramos y ambos elementos han desaparecido
 		
 		sc.close();
@@ -125,7 +125,7 @@ public class main {
 			nLinies = 100;
 		
 		result = new String[nLinies];
-		Scanner f = new Scanner(new File("CiutadansED.csv"));
+		Scanner f = new Scanner(new File("ED_Ciutadans_50k.csv"));
 		for (int i = 0; i < nLinies; i++) {
 			result[i] = f.nextLine();
 		}

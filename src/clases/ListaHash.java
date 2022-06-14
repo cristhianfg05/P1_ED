@@ -25,9 +25,7 @@ public class ListaHash implements TadListaHash<Object, Object> {
 		// Calculamos el factor de carga
 		if (ObtenirFactorCarrega() > 0.75) {
 			Redimensionar();
-			System.out.println("\nHe redimensionado");
 		}
-
 		// Calculamos posicion
 		int pos = key.hashCode() % this.lista.length;
 		if (pos < 0)
@@ -304,37 +302,14 @@ public class ListaHash implements TadListaHash<Object, Object> {
 	public String toString() {
 		String concat = "";
 		if (this.elems == 0)
-			return concat;
+			return "No hay elementos";
 		else {
-			NodoHash actual = this.lista[0];
-			for (int i = 1; i < lista.length; i++) {
-				if (actual != null) {
-					if (actual.getSeg() == null) {
-						concat = concat + actual + "\n";
-						actual = this.lista[i];
-					} else {
-						while (actual.getSeg() != null) {
-							concat = concat + actual + "\n";
-							actual = actual.getSeg();
-						}
-
-						concat = concat + actual + "\n";
-						actual = this.lista[i];
-					}
-				} else
-					actual = this.lista[i];
-			}
-
-			if (actual != null) {
-				if (actual.getSeg() == null) {
-					concat = concat + actual + "\n";
-				} else {
-					while (actual.getSeg() != null) {
-						concat = concat + actual + "\n";
-						actual = actual.getSeg();
-					}
-
-					concat = concat + actual + "\n";
+			NodoHash actual;
+			for (int i = 0; i < lista.length; i++) {
+				actual = this.lista[i];
+				while(actual != null) {
+					concat = concat + "\n"+actual.toString();
+					actual = actual.getSeg();
 				}
 			}
 			return concat;
@@ -347,135 +322,30 @@ public class ListaHash implements TadListaHash<Object, Object> {
 	}
 
 	private void Redimensionar() {
+		System.out.println("Voy a redimensionar");
 		NodoHash[] listaNueva = new NodoHash[this.lista.length + 10];
 		int pos;
-		NodoHash actual = this.lista[0];
-		NodoHash aux;
-		for (int i = 1; i < this.lista.length; i++) {
-			if(actual != null) {
-				if(actual.getSeg() == null) {
-					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
-					if(pos < 0)
-						pos = pos * -1;
-					if(listaNueva[pos] == null) {
-						listaNueva[pos] = actual;
-					}else {
-						aux = listaNueva[pos];
-						if(aux.getSeg() == null) {
-							aux.setSeg(actual);
-						}else {
-							while(aux.getSeg() != null) {
-								aux = aux.getSeg();
-							}
-							aux.setSeg(actual);
-						}
-					}
-					actual = this.lista[i];
+		NodoHash actual, mover, insertar;
+		for (int i = 0; i < this.lista.length; i++) {
+			actual = this.lista[i];
+			while (actual != null) {
+				mover = actual;
+				actual = actual.getSeg();
+				mover.setSeg(null);
+				pos = Math.abs(mover.getValor().getDni().hashCode() % listaNueva.length);
+				insertar = listaNueva[pos];
+				if(insertar == null) {
+					listaNueva[pos] = mover;
 				}else {
-					while(actual.getSeg() != null) {
-						pos = actual.getValor().getDni().hashCode() % listaNueva.length;
-						if(pos < 0)
-							pos = pos * -1;
-						if(listaNueva[pos] == null) {
-							listaNueva[pos] = actual;
-						}else {
-							aux = listaNueva[pos];
-							if(aux.getSeg() == null) {
-								aux.setSeg(actual);
-							}else {
-								while(aux.getSeg() != null) {
-									aux = aux.getSeg();
-								}
-								aux.setSeg(actual);
-							}
-						}
-						actual = actual.getSeg();
+					while(insertar.getSeg() != null) {
+						insertar = insertar.getSeg();
+						
 					}
-					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
-					if(pos < 0)
-						pos = pos * -1;
-					if(listaNueva[pos] == null) {
-						listaNueva[pos] = actual;
-					}else {
-						aux = listaNueva[pos];
-						if(aux.getSeg() == null) {
-							aux.setSeg(actual);
-						}else {
-							while(aux.getSeg() != null) {
-								aux = aux.getSeg();
-							}
-							aux.setSeg(actual);
-						}
-					}
-					
-				}
-			}else 
-				actual = this.lista[i];
-			
-		}
-		if(actual != null) {
-			if(actual.getSeg() == null) {
-				pos = actual.getValor().getDni().hashCode() % listaNueva.length;
-				if(pos < 0)
-					pos = pos * -1;
-				if(listaNueva[pos] == null) {
-					listaNueva[pos] = actual;
-				}else {
-					aux = listaNueva[pos];
-					if(aux.getSeg() == null) {
-						aux.setSeg(actual);
-					}else {
-						while(aux.getSeg() != null) {
-							aux = aux.getSeg();
-						}
-						aux.setSeg(actual);
-					}
-				}
-			}else {
-				while(actual.getSeg() != null) {
-					pos = actual.getValor().getDni().hashCode() % listaNueva.length;
-					if(pos < 0)
-						pos = pos * -1;
-					if(listaNueva[pos] == null) {
-						listaNueva[pos] = actual;
-					}else {
-						aux = listaNueva[pos];
-						if(aux.getSeg() == null) {
-							aux.setSeg(actual);
-						}else {
-							while(aux.getSeg() != null) {
-								aux = aux.getSeg();
-							}
-							aux.setSeg(actual);
-						}
-					}
-					actual = actual.getSeg();
+					insertar.setSeg(mover);
 				}
 			}
-			
+
 		}
+		this.lista = listaNueva;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
