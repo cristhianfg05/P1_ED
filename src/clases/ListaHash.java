@@ -308,7 +308,7 @@ public class ListaHash implements TadListaHash<Object, Object> {
 			for (int i = 0; i < lista.length; i++) {
 				actual = this.lista[i];
 				while(actual != null) {
-					concat = concat + "\n"+actual.toString();
+					concat = concat + "\n"+actual.toString() + " "+i;
 					actual = actual.getSeg();
 				}
 			}
@@ -323,7 +323,7 @@ public class ListaHash implements TadListaHash<Object, Object> {
 
 	private void Redimensionar() {
 		System.out.println("Voy a redimensionar");
-		NodoHash[] listaNueva = new NodoHash[this.lista.length + 10];
+		NodoHash[] listaNueva = new NodoHash[this.lista.length  * 2];
 		int pos;
 		NodoHash actual, mover, insertar;
 		for (int i = 0; i < this.lista.length; i++) {

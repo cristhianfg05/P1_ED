@@ -13,7 +13,7 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Cuantos ciudadanos del fichero quieres añadir? [0-100] ");
 		
-		Lista listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
+		ListaEnlazadaOrdenada listaEnlazada = afegirDadesDeFitxer(sc.nextInt());
 
 
 		char opcion = 'a';
@@ -102,17 +102,17 @@ public class main {
 		}
 		
 		/*Test de pruebas HASH MUCHOS ELEMENTOS*/
-		ListaHash p = afegirDadesDeFitxer2(15); 	//Añade muchos elementos a la lista todos recogidos del CSV Generado en Mookaroo
-		System.out.println(p);						//Imprimimos la lista completa
-		System.out.println(p.ObtenirKeys());		//Recogemos todos los DNI
-		System.out.println(p.ObtenirValors()[0]);	//Recogemos todos los nombres
-		System.out.print(p.ObtenirValors()[1]);		//Recogemos todos los apellidos
-		System.out.println(p.Buscar("57295964M"));	//Buscamos el primer elemento añadido (Obtenir y buscar tienen el mismo funcionamiento por lo que testeando uno sabemos que ambos funcionan)
+		ListaHash p = afegirDadesDeFitxer2(50000); 	//Añade muchos elementos a la lista todos recogidos del CSV Generado en Mookaroo
+		//System.out.println(p);						//Imprimimos la lista completa
+		//System.out.println(p.ObtenirKeys());		//Recogemos todos los DNI
+		//System.out.println(p.ObtenirValors()[0]);	//Recogemos todos los nombres
+		//System.out.print(p.ObtenirValors()[1]);		//Recogemos todos los apellidos
+		System.out.println(p.Buscar("70929232B"));	//Buscamos el primer elemento añadido (Obtenir y buscar tienen el mismo funcionamiento por lo que testeando uno sabemos que ambos funcionan)
 		System.out.println(p.Buscar("92897800W"));	//Buscamos el ultimo elemento añadido
 		
 		p.Esborrar("57295964M");					//Borramos el primer elemento y uno del medio y mostramos por pantalla
 		p.Esborrar("48928682G");
-		System.out.println(p);						//Mostramos y ambos elementos han desaparecido
+		//System.out.println(p);						//Mostramos y ambos elementos han desaparecido
 		
 		sc.close();
 	}
@@ -133,8 +133,8 @@ public class main {
 		return result;
 	}
 
-	private static Lista afegirDadesDeFitxer(int linies) throws FileNotFoundException {
-		Lista lista = new Lista();
+	private static ListaEnlazadaOrdenada afegirDadesDeFitxer(int linies) throws FileNotFoundException {
+		ListaEnlazadaOrdenada lista = new ListaEnlazadaOrdenada();
 		String[] fichero = llegirLiniesFitxer(linies);
 		for (int i = 0; i < fichero.length; i++) {
 			String[] ficheroSplit = fichero[i].split(",");
